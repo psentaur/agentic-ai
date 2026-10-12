@@ -1,0 +1,170 @@
+\documentclass[11pt]{article}
+% Named course report. Use review mode only if the course requests anonymity.
+\usepackage[preprint]{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\newcommand{\pending}[1]{\textcolor{red!70!black}{\textbf{Pending:} #1}}
+
+\title{Explanation Budgets for Small Multilingual Language Models:\\A Preliminary MGSM Study}
+\author{Teammate 1 \quad Teammate 2 \quad Teammate 3 \quad Teammate 4 \\ \textit{Replace with actual names, institution, and contact details}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+How much visible explanation should a small multilingual language model produce? We compare 0, 2, 4, 8, and 16 requested steps on parallel English, Bengali, and Telugu MGSM questions using frozen Qwen3 1.7B and 4B checkpoints. A local NF4 pilot completes 2,300 responses on 50 matched development IDs, representing 20\% of the planned evaluation grid. For 4B English native explanations, four to sixteen steps reduces numerical accuracy from 86\% to 74\%, with an exploratory paired 95\% interval of [$-24$, $-2$] percentage points, while mean generated tokens rise from 118.9 to 318.6. Four of seven lost correct answers have missing answer markers at sixteen steps, qualifying interpretation of the decline. Other budget and pivot effects vary by language and checkpoint. We release reproducible scoring audits and observable diagnostics; independent human review and held-out budget-router evaluation remain pending. The pilot does not establish a reasoning-capacity cliff.
+\end{abstract}
+
+\section{Introduction}
+Mathematical word problems require language understanding and correct calculation. GSM8K \citep{cobbe2021gsm8k} and its multilingual extension MGSM \citep{shi2023mgsm} provide benchmark questions. Visible explanations can support correct answers, but longer output also costs tokens and may introduce formatting problems. We ask how requested explanation budgets affect two small multilingual checkpoints, rather than assuming that more steps are preferable.
+
+We study Qwen3 1.7B and 4B \citep{qwen2025} on parallel English, Bengali, and Telugu questions. Our contributions are (1) a matched native/pivot budget sweep, (2) a reproducible 2,300-response local pilot with independently reconciled scores, and (3) paired cost and formatting diagnostics that constrain interpretation. These are experimental contributions; we do not claim a new reasoning algorithm or a demonstrated capacity cliff. Human scientific review remains pending.
+
+\paragraph{Objectives.}
+RQ1 measures accuracy across 0, 2, 4, 8, and 16 requested steps. RQ2 compares native and English-pivot explanations across languages and model sizes. RQ3 tests whether question-dependent routing retains accuracy while reducing generated tokens. The intended outputs are reproducible curves, paired comparisons, error diagnostics, and a held-out router evaluation.
+
+\section{Related Work}
+\subsection{Reasoning prompts and efficiency}
+Chain-of-thought \citep{wei2022cot} and zero-shot step prompting \citep{kojima2022zeroshot} motivate visible explanations. Self-consistency \citep{wang2023selfconsistency} votes over sampled paths; least-to-most \citep{zhou2023leasttomost} sequentially solves subproblems; PAL \citep{gao2023pal} delegates computation to an interpreter. Compositional evaluation \citep{press2023compositionality} and explanation-faithfulness analysis \citep{turpin2023faithfulness} caution against equating plausible text with correct reasoning. TALE \citep{han2025tale} explicitly addresses token efficiency. Our study instead sweeps requested step counts in a fixed multilingual inference setup and separately records actual token use.
+
+\subsection{Multilingual reasoning}
+XTREME \citep{hu2020xtreme} establishes broad cross-lingual evaluation, and MGSM \citep{shi2023mgsm} supplies parallel math questions. mCoT \citep{mcot2024} addresses consistency through multilingual instruction tuning. Recent work studies English as a reasoning language \citep{linguafranca2026} and balances reasoning quality with language consistency through training \citep{lang2026}. We compare frozen small checkpoints without language-model fine-tuning; a lightweight selector is planned. This focus differs from training-based methods and large-model reasoning studies without implying wholly new multilingual routing.
+
+\section{Methodology}
+\subsection{Matched explanation-length intervention}
+Figure~\ref{fig:system} separates development decisions from held-out evaluation. Each question is processed independently. The common English instruction requests native-language explanations, or English explanations for an Indic question, followed by a brief answer in the question's language and a common numerical marker. Direct-answer prompts request no explanation. Built-in Qwen thinking is disabled for every condition; all conditions share the same output ceiling and sampling settings.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[node distance=4mm, box/.style={draw, rounded corners, align=center, font=\small, text width=6.4cm, inner sep=4pt}, flow/.style={-{Stealth}, thick}]
+\node[box,fill=blue!10] (data) {Parallel MGSM questions\\Shared-ID split: 100 development / 150 test};
+\node[box,fill=cyan!10,below=of data] (sweep) {Development sweep\\Two models; native and English-pivot explanations};
+\node[box,fill=orange!12,below=of sweep] (score) {Numerical scoring and diagnostics\\Accuracy, actual steps, tokens, truncation};
+\node[box,fill=green!10,below=of score] (router) {Grouped development validation\\Question-only router and fixed baselines};
+\node[box,fill=purple!10,below=of router] (test) {Freeze configuration and policies\\Held-out sweep and cached-policy comparison};
+\draw[flow] (data) -- (sweep);
+\draw[flow] (sweep) -- (score);
+\draw[flow] (score) -- (router);
+\draw[flow] (router) -- (test);
+\end{tikzpicture}
+\caption{Study workflow. Held-out outputs do not inform prompts, router fitting, or baseline selection. Test inference is enabled only after the development freeze.}
+\label{fig:system}
+\end{figure}
+
+\section{Experimental Setup}
+\subsection{Data and models}
+We use parallel MGSM \citep{shi2023mgsm}, derived from GSM8K \citep{cobbe2021gsm8k}. English, Bengali, and Telugu each have 250 rows: 750 records across 250 shared IDs. Source-row alignment and normalized numerical gold agreement are checked for every ID; neither proves translation fidelity. Pinned dataset and model revisions are supplied with the package.
+
+Python's \texttt{random.Random(42)} shuffles shared IDs into 100 development and 150 held-out IDs. All translations share assignments. The first ten and 50 development IDs form nested smoke and pilot subsets; completed responses are reused. The pilot has 1,150 responses per model and 50 per condition. No held-out outputs exist.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{lrr}
+\toprule
+Response cohort & Planned & Completed \\
+\midrule
+Pilot (50 IDs) & 2,300 & 2,300 \\
+Development & 4,600 & 2,300 \\
+Held out & 6,900 & 0 \\
+Full study & 11,500 & 2,300 \\
+\bottomrule
+\end{tabular}
+\caption{Planned and completed response coverage. The pilot is part of development, so these rows are not additive. Each model/problem has 15 native and eight Indic English-pivot conditions; direct-answer pivots are omitted because no explanation is requested. Both models have 1,150 completed responses, with 50 observations in each of the 46 model/condition cells. The completed pilot is 20\% of the full grid.}
+\label{tab:grid}
+\end{table}
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{figures/pilot_accuracy_curves.pdf}
+\caption{Numerical accuracy on 50 matched development IDs per condition. Rows are checkpoints and columns are question languages. Solid lines use native explanations; dashed lines use English pivots. Budgets request visible numbered steps. Error bars are exploratory 95\% shared-ID bootstrap intervals (2,000 resamples, seed 42); no multiplicity-adjusted significance is claimed.}
+\label{fig:pilot-curves}
+\end{figure*}
+
+\input{tables/pilot_native}
+
+\subsection{Metrics, baselines, and implementation}
+Numerical exact match requires one standalone \texttt{FINAL\_ANSWER:} marker and a finite decimal number. The study-specific parser normalizes Unicode digits, signs, valid western/Indian comma grouping, and equivalent decimal forms. Missing/duplicate markers, units, fractions, or invalid payloads fail parsing and count as incorrect. Last-line placement is requested but not required by the scorer. Every generated response, including parsing failures and truncation, stays in the denominator.
+
+Diagnostics record generated tokens, numbered-line counts, count compliance, parsing, truncation, repetition, and letter scripts. Counts and scripts do not establish semantic correctness or language quality. Infrastructure failures are logged separately.
+
+A separate audit independently reconciles raw-response scores, summary tables, and paired intervals; human review remains pending. Appendix details describe this check and future router baselines.
+
+Local inference uses an RTX 4060 Laptop GPU (8 GB), NF4 weights with double quantization and FP16 compute for both checkpoints. Thinking is disabled. Batch size is one; temperature is 0.7, top-p 0.8, top-k 20, with a 4,096-new-token cap. Per-condition seeds, versions, timing, memory and termination status are logged; Appendix gives runtime details.
+
+\section{Results and Discussion}
+\subsection{RQ1: accuracy across explanation budgets}
+Figure~\ref{fig:pilot-curves} shows the complete pilot curves. Table~\ref{tab:pilot-native} compares native four- and sixteen-step requests; the source package contains all 46 condition summaries and 26 prespecified contrasts.
+
+
+
+For the 4B checkpoint on English questions, native four- to sixteen-step requests change accuracy from 43/50 (86\%) to 37/50 (74\%): $-12$ percentage points, exploratory paired 95\% interval [$-24$, $-2$]. Mean generated tokens increase from 118.9 to 318.6. Numbered-line count matches the request in 49/50 responses at both budgets, and neither condition is truncated. The paired outcomes include seven correct-to-incorrect transitions and one incorrect-to-correct transition. Four of the seven losses have missing final-answer markers at sixteen steps; parse failures increase from 1/50 to 5/50. These format associations qualify interpretation of the score decline without establishing its cause or a reasoning-capacity cliff. All 50 IDs remain in the primary comparison.
+
+The 1.7B English native curve is nonmonotone (14\%, 54\%, 34\%, 28\%, 44\% at 0/2/4/8/16 requested steps). Its sixteen-minus-four difference is $+10$ points, interval [$-8$, $26.05$]. At sixteen steps, numbered-count compliance is only 10\%, versus 84\% at four steps. Requested length therefore cannot be equated with actual explanation length.
+
+Prespecified contrasts compare native 16-minus-4, Indic/English differences in that effect, and pivot-minus-native at nonzero budgets. Intervals use 2,000 shared-ID bootstrap resamples with seed 42 and are exploratory, without multiplicity adjustment.
+
+\subsection{RQ2: language, pivot, and model comparisons}
+Native sixteen-minus-four differences for EN/BN/TE are $+10/+2/+16$ percentage points for 1.7B and $-12/-8/-10$ for 4B. All four Indic-minus-English difference-in-effect intervals include zero, so the pilot does not establish a stronger Indic decline. The 4B checkpoint has descriptively higher accuracy in every matched condition, but checkpoint differences cannot be attributed solely to parameter count.
+
+English pivot has no uniform advantage. At four steps, pivot-minus-native accuracy for 1.7B is $-18$ points on Bengali questions (interval [$-30$, $-6$]) and $+16$ on Telugu ([$4$, $28$]). These examples are exploratory; all 26 comparisons are exported to avoid selective reporting. Parsing, truncation, token cost, and numbered counts remain visible, and script diagnostics do not establish native-language fluency or semantic compliance. Final held-out comparisons remain pending.
+
+\subsection{RQ3: router and ablation}
+Router training and ablation require the remaining development responses. Policies will be frozen before held-out inference and compared with fixed eight-step, global-best, and language-best budgets. No router benefit has been measured; implementation tests use synthetic fixtures only.
+
+\subsection{Error analysis}
+The diagnostic sample contains 40 incorrect responses (20 per model), drawn by seeded sampling across model, question-language, and requested-explanation-language strata. Six fail parsing: four missing markers, one duplicate marker, and one invalid numeric payload; none is truncated. The other 34 contain a valid but wrong numerical answer. These are sample counts, not estimates of overall error rates.
+
+Requested language and observed scripts are separate: of 24 English requests, 12 pass an English-text selection proxy, four are numeric-only, and eight primarily contain Indic script. Ten distinct-question double reviews cover four 4B English, three 1.7B English, one Bengali pivot and two Telugu pivots. Human solutions, evidence quotes, semantic categories, and disagreement resolution remain pending; scripts do not establish fluency.
+
+\section{Conclusion}
+Requested visible explanation length changes both numerical scores and token cost in this pilot. The 4B English four-to-sixteen decline accompanies higher cost and more missing answer markers, so an accuracy drop alone cannot establish reduced reasoning capacity. Language and pivot effects are heterogeneous. The audited 2,300-response milestone supports preliminary comparisons; independent human review, complete development coverage, and frozen held-out router evaluation are the next steps.
+
+\section*{Limitations}
+The 50-ID pilot uses one NF4 setting and one sample per condition. Its development split prevents project leakage, not pretraining contamination. Checkpoints differ in more than parameter count; English instructions may affect native outputs. Scripts and numbered counts do not establish semantic quality, and native-language review requires suitable expertise. Results do not automatically generalize to full precision or held-out data. Diagnostic samples cannot estimate population error rates.
+
+\section*{AI Use Statement}
+AI assistance supported code, manuscript editing, source-linked checks, and observable diagnostic exports. It did not supply human review decisions or act as a semantic judge. Human authors must verify the scientific reasoning, citations, numerical claims, and final submission; their sign-off remains pending.
+
+\clearpage
+\bibliography{references}
+
+\appendix
+\section{Reproduction and Exact Prompts}
+The source package includes original-data checksums, the shared-ID manifest, pinned model revisions, all generation settings, and command-line instructions. Exact prompts are rendered by \texttt{study/prompts.py}; exporting the grid with the \texttt{plan} command performs no inference and contains no gold answers. GPU responses are checkpointed by unique experiment ID. Frozen router predictions select cached held-out native outputs without additional model calls.
+
+\subsection{Question-only budget router}
+We specify one decision tree per model with maximum depth three and minimum leaf size ten. Features are question language, character length, punctuation-based sentence count, and digit-based quantity count. Labels are the shortest development budget producing a correct answer. Questions with no successful budget are excluded from label fitting and their number is reported; evaluation still includes them. Five-fold validation groups every translation of a problem together. A tree without language supplies an ablation. No model answer or correct answer is available to the deployed selector.
+
+\section{Local Runtime}
+Local inference uses an NVIDIA RTX 4060 Laptop GPU with 8 GB VRAM, Python 3.12, PyTorch 2.8.0 with CUDA 12.6, Transformers 4.57.1, and bitsandbytes 0.48.1. Both checkpoints use NF4 weight quantization with double quantization and FP16 compute. Batch size is one, with temperature 0.7, top-p 0.8, top-k 20, and a common 4,096-new-token ceiling. Longest requested budgets run first within each problem block. Per-condition seeds, software versions, raw responses, latency, memory, and termination status are logged. Completed experiment IDs are reused across feasibility, smoke, and pilot stages; precision settings are not pooled.
+
+\section{Audit and Planned Baselines}
+A separate automated audit independently reconstructs dataset checksums and seed-42 splits, parses and scores the raw pilot responses without calling the production scorer, and reconciles scored records, summaries, and paired bootstrap intervals. Its evidence is saved in the results package. This computational cross-check does not replace independent human solving or review of translation fidelity.
+
+Router baselines are always eight steps, the development-best global budget per model, and the development-best language-specific budget per model. Fixed choices maximize training-fold accuracy, with shortest-budget tie breaking; they are refitted on full development before test evaluation. This efficiency comparison is motivated by budget-aware reasoning \citep{han2025tale}, but the baselines are policies defined in this study rather than imported implementations.
+
+\section{Input-token Characterization}
+\subsection{Completed input-token characterization}
+We measured original question token counts on all 100 development IDs in the three languages, using each pinned tokenizer without model generation. Both checkpoints produced identical question token counts on this subset. Mean question lengths were 58.87 tokens in English, 249.44 in Bengali, and 375.67 in Telugu. Figure~\ref{fig:tokens} shows mean ratios computed within matched problem pairs: Bengali/English 4.21 (95\% bootstrap interval 4.10--4.32), and Telugu/English 6.36 (6.19--6.53).
+
+\begin{figure}[t]
+\centering
+\IfFileExists{figures/input_token_ratios.pdf}{\includegraphics[width=\columnwidth]{figures/input_token_ratios.pdf}}{\fbox{\parbox{0.9\columnwidth}{Run the development characterization and packaging scripts to include the measured token figure.}}}
+\caption{Actual input-token ratios on 100 development problem IDs. Error bars resample matched IDs. These measurements describe tokenizer/input differences and do not establish an accuracy decline.}
+\label{fig:tokens}
+\end{figure}
+
+This observation makes generated-token accounting particularly relevant: equal requested step counts need not imply equal textual cost across languages. Input-length differences alone cannot distinguish tokenization effects, translation length, language understanding, or reasoning capacity. No held-out questions were used in this characterization, and no gold answers were used to compute its statistics.
+
+\section{Completion Checklist}
+Replace all teammate placeholders; report actual precision and software versions; complete independent human review and future router evaluation; verify the main-text page count in Overleaf; independently audit the bibliography; remove pending fields only when their requirements have been met.
+\end{document}

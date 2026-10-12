@@ -1,0 +1,153 @@
+{
+  "retrieved_at": "2026-10-11T19:00:41.752042+00:00",
+  "entries": [
+    {
+      "key": "wei2022cot",
+      "source_urls": [
+        "https://papers.neurips.cc/paper_files/paper/2022/hash/9d5609613524ecf4f15af0f7b31abca4-Abstract-Conference.html",
+        "https://papers.neurips.cc/paper_files/paper/18168-/bibtex"
+      ],
+      "source_kind": "neurips",
+      "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+      "bibtex_sha256": "3f604baa2ca78a0cb5ed1deb65ec3dce6b6eb88c6a3491bd5e6d26e5a7e1212d"
+    },
+    {
+      "key": "kojima2022zeroshot",
+      "source_urls": [
+        "https://proceedings.neurips.cc/paper/2022/hash/8bb0d291acd4acf06ef112099c16f326-Abstract-Conference.html",
+        "https://proceedings.neurips.cc/paper_files/paper/16811-/bibtex"
+      ],
+      "source_kind": "neurips",
+      "title": "Large Language Models are Zero-Shot Reasoners",
+      "bibtex_sha256": "f87ea2c407b27d5a73b79604ab78de335958b3bcd365c42306aeb203a9c84f95"
+    },
+    {
+      "key": "turpin2023faithfulness",
+      "source_urls": [
+        "https://proceedings.neurips.cc/paper_files/paper/2023/hash/ed3fea9033a80fea1376299fa7863f4a-Abstract-Conference.html",
+        "https://proceedings.neurips.cc/paper_files/paper/22048-/bibtex"
+      ],
+      "source_kind": "neurips",
+      "title": "Language Models Don’t Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting",
+      "bibtex_sha256": "065dc1a00cf6c86ff4f1bdf38ea95bc1e07d369b82afc723952b25f2aca9dae2"
+    },
+    {
+      "key": "gao2023pal",
+      "source_urls": [
+        "https://proceedings.mlr.press/v202/gao23f.html"
+      ],
+      "source_kind": "pmlr",
+      "title": "PAL: Program-aided Language Models",
+      "bibtex_sha256": "9ba90c4cc3adf704efe3707453926c50d9ecc20527ed51064aa6ac0e9c938c61"
+    },
+    {
+      "key": "hu2020xtreme",
+      "source_urls": [
+        "https://proceedings.mlr.press/v119/hu20b.html"
+      ],
+      "source_kind": "pmlr",
+      "title": "XTREME: A Massively Multilingual Multi-task Benchmark for Evaluating Cross-lingual Generalisation",
+      "bibtex_sha256": "c3de49c1f36e85704fa76ab343438a7e7080c3a533d11e4934bbf402de71ff22"
+    },
+    {
+      "key": "han2025tale",
+      "source_urls": [
+        "https://aclanthology.org/2025.findings-acl.1274.bib"
+      ],
+      "source_kind": "acl",
+      "title": "Token-Budget-Aware LLM Reasoning",
+      "bibtex_sha256": "6739b000f009a3fd4379897d9703124b128596432203c8a90f0d25fb0a8b4976"
+    },
+    {
+      "key": "mcot2024",
+      "source_urls": [
+        "https://aclanthology.org/2024.acl-long.649.bib"
+      ],
+      "source_kind": "acl",
+      "title": "mCoT: Multilingual Instruction Tuning for Reasoning Consistency in Language Models",
+      "bibtex_sha256": "b05235bc15d8826fd2d398bf9d69267d26227c21ea43e1edf5db9279d694d52e"
+    },
+    {
+      "key": "linguafranca2026",
+      "source_urls": [
+        "https://aclanthology.org/2026.eacl-short.25.bib"
+      ],
+      "source_kind": "acl",
+      "title": "The Reasoning Lingua Franca: A Double-Edged Sword for Multilingual AI",
+      "bibtex_sha256": "90934ab9ceac8c01bcfadb9f33b092e3b2be9b9e9d053ec890e445ed0cf9aee6"
+    },
+    {
+      "key": "lang2026",
+      "source_urls": [
+        "https://aclanthology.org/2026.acl-long.2029.bib"
+      ],
+      "source_kind": "acl",
+      "title": "LANG: Reinforcement Learning for Multilingual Reasoning with Language-Adaptive Hint Guidance",
+      "bibtex_sha256": "79b0e6e04830e71e252fffc92cf8cc7f6b5b5d23c544727e2aea4ffaeeb93f09"
+    },
+    {
+      "key": "press2023compositionality",
+      "source_urls": [
+        "https://aclanthology.org/2023.findings-emnlp.378.bib"
+      ],
+      "source_kind": "acl",
+      "title": "Measuring and Narrowing the Compositionality Gap in Language Models",
+      "bibtex_sha256": "db0d9472f783cacf2b49ecc3e9fca8f7aa9e62bb0cce689e1b3bc21932ec8dca"
+    },
+    {
+      "key": "shi2023mgsm",
+      "source_urls": [
+        "https://arxiv.org/abs/2210.03057",
+        "https://iclr.cc/Downloads/2023",
+        "https://openreview.net/forum?id=fR3wGCk-IXp"
+      ],
+      "source_kind": "iclr2023",
+      "title": "Language Models are Multilingual Chain-of-Thought Reasoners",
+      "bibtex_sha256": "45dc618ce965e8b8e3185fc11cbb81ed7f57a9abf9c33f6b5a5af163c2d7290f"
+    },
+    {
+      "key": "wang2023selfconsistency",
+      "source_urls": [
+        "https://arxiv.org/abs/2203.11171",
+        "https://iclr.cc/Downloads/2023",
+        "https://openreview.net/forum?id=1PL1NIMMrw"
+      ],
+      "source_kind": "iclr2023",
+      "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+      "bibtex_sha256": "ea67a9fdc2d7315983361fb511bca7798ceb369ae18997eab818d480dd88fd7f"
+    },
+    {
+      "key": "zhou2023leasttomost",
+      "source_urls": [
+        "https://arxiv.org/abs/2205.10625",
+        "https://iclr.cc/Downloads/2023",
+        "https://openreview.net/forum?id=WZH7099tgfM"
+      ],
+      "source_kind": "iclr2023",
+      "title": "Least-to-Most Prompting Enables Complex Reasoning in Large Language Models",
+      "bibtex_sha256": "42c111bcaaad535a657f204c05be751b1277d663f903b938f75e5a3c45dc18ee"
+    },
+    {
+      "key": "cobbe2021gsm8k",
+      "source_urls": [
+        "https://arxiv.org/abs/2110.14168"
+      ],
+      "source_kind": "arxiv",
+      "title": "Training Verifiers to Solve Math Word Problems",
+      "bibtex_sha256": "c55761f388dc8e9ade90c0c380f322b965f1b80c63ff450a31a7b5a85cbcba9e"
+    },
+    {
+      "key": "qwen2025",
+      "source_urls": [
+        "https://huggingface.co/Qwen/Qwen3-1.7B/raw/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e/README.md",
+        "https://arxiv.org/abs/2505.09388"
+      ],
+      "source_kind": "qwen",
+      "title": "Qwen3 Technical Report",
+      "bibtex_sha256": "c444b46f16cb05988bcca6c276b0490a1451c6cedb03a815d0e0eee0ab3e06fa"
+    }
+  ],
+  "preprints": 2,
+  "reference_count": 15,
+  "note": "ICLR authors/titles checked in original author uploads; venue/year checked in the official ICLR listing. Direct OpenReview access was challenged; team should inspect canonical pages before submission."
+}

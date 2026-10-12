@@ -1,0 +1,19 @@
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llrrrrrr}
+\toprule
+Model & Language & \shortstack{Accuracy\\(\%)} & \shortstack{Mean\\tokens} & \shortstack{Mean\\steps} & \shortstack{Count match\\(\%)} & \shortstack{Parse fail\\(\%)} & \shortstack{Truncated\\(\%)} \\
+\midrule
+Qwen3-1.7b & EN & 34$\to$44 & 97.1$\to$167.1 & 3.8$\to$7.7 & 84$\to$10 & 42$\to$34 & 0$\to$0 \\
+Qwen3-1.7b & BN & 28$\to$30 & 281.6$\to$1000.2 & 4.0$\to$15.5 & 98$\to$64 & 16$\to$10 & 0$\to$6 \\
+Qwen3-1.7b & TE & 4$\to$20 & 740.3$\to$1368.3 & 3.8$\to$13.9 & 92$\to$78 & 26$\to$12 & 10$\to$8 \\
+Qwen3-4b & EN & 86$\to$74 & 118.9$\to$318.6 & 4.0$\to$15.9 & 98$\to$98 & 2$\to$10 & 0$\to$0 \\
+Qwen3-4b & BN & 72$\to$64 & 319.1$\to$849.4 & 4.0$\to$16.0 & 98$\to$100 & 2$\to$0 & 0$\to$0 \\
+Qwen3-4b & TE & 56$\to$46 & 698.8$\to$1652.3 & 3.9$\to$14.5 & 96$\to$88 & 6$\to$12 & 6$\to$12 \\
+\bottomrule
+\end{tabular}
+\caption{Native four- to sixteen-step comparisons on the same 50 development IDs per row. Arrows show four-step then sixteen-step values. Accuracy retains parse failures and truncated outputs. Steps are mean numbered-line counts; count match does not establish semantic compliance.}
+\label{tab:pilot-native}
+\end{table*}

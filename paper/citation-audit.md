@@ -1,0 +1,3 @@
+# Citation audit
+
+Assisted primary-source checks and evidenced metadata corrections are documented in [literature-verification.md](literature-verification.md) and [claim-source-map.json](claim-source-map.json). All 15 references are cited. Two are preprints (13.3%). Original bibliography retrieval hashes remain available in citation-provenance.json; current edited entries/hashes are in the claim map. Human source-reading sign-off remains pending. mCoT full PDF retrieval timed out; its publisher abstract and metadata were checked. Canonical OpenReview pages required browser verification; accessible author versions were used for content.

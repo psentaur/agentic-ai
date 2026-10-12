@@ -1,0 +1,75 @@
+{
+  "kind": "development_input_tokenization_only",
+  "dataset_hash": "17eff5d892992a48b56b17d2abc7d223f2c10f80b5e193a7e5df108abce8410f",
+  "problem_ids": 100,
+  "gold_answers_used": false,
+  "model_generations": 0,
+  "environment": {
+    "transformers": "4.57.1",
+    "tokenizers": "0.22.2",
+    "jinja2": "3.1.6"
+  },
+  "summary": [
+    {
+      "model": "qwen3-1.7b",
+      "language": "bn",
+      "development_ids": 100,
+      "mean_question_tokens": 249.44,
+      "median_question_tokens": 231.0,
+      "mean_paired_token_ratio_to_english": 4.209501932160467,
+      "ratio_ci_low": 4.098514284657939,
+      "ratio_ci_high": 4.322119427571726
+    },
+    {
+      "model": "qwen3-1.7b",
+      "language": "en",
+      "development_ids": 100,
+      "mean_question_tokens": 58.87,
+      "median_question_tokens": 56.0,
+      "mean_paired_token_ratio_to_english": 1.0,
+      "ratio_ci_low": 1.0,
+      "ratio_ci_high": 1.0
+    },
+    {
+      "model": "qwen3-1.7b",
+      "language": "te",
+      "development_ids": 100,
+      "mean_question_tokens": 375.67,
+      "median_question_tokens": 356.0,
+      "mean_paired_token_ratio_to_english": 6.356984202866596,
+      "ratio_ci_low": 6.185533760695205,
+      "ratio_ci_high": 6.526888548247123
+    },
+    {
+      "model": "qwen3-4b",
+      "language": "bn",
+      "development_ids": 100,
+      "mean_question_tokens": 249.44,
+      "median_question_tokens": 231.0,
+      "mean_paired_token_ratio_to_english": 4.209501932160467,
+      "ratio_ci_low": 4.098514284657939,
+      "ratio_ci_high": 4.322119427571726
+    },
+    {
+      "model": "qwen3-4b",
+      "language": "en",
+      "development_ids": 100,
+      "mean_question_tokens": 58.87,
+      "median_question_tokens": 56.0,
+      "mean_paired_token_ratio_to_english": 1.0,
+      "ratio_ci_low": 1.0,
+      "ratio_ci_high": 1.0
+    },
+    {
+      "model": "qwen3-4b",
+      "language": "te",
+      "development_ids": 100,
+      "mean_question_tokens": 375.67,
+      "median_question_tokens": 356.0,
+      "mean_paired_token_ratio_to_english": 6.356984202866596,
+      "ratio_ci_low": 6.185533760695205,
+      "ratio_ci_high": 6.526888548247123
+    }
+  ],
+  "interpretation": "These are actual input token counts. They do not measure output length, mathematical accuracy, reasoning quality, or a capacity cliff, and do not count toward the 2,300-response milestone."
+}
