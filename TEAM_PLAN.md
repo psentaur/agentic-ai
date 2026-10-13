@@ -24,9 +24,9 @@ Fill in names before distributing work:
 - [x] All 24 software tests pass; duplicate records, altered scores/tables, and malformed input are rejected in temporary audit fixtures. Reruns preserve human review annotations.
 - [x] Update the manuscript's dataset, splits, metrics, and planned-versus-completed coverage text.
 - [x] Prepare a ten-case numerical review packet and Person 1-only manual guide: `docs/MANUAL_TASKS.md`. Automated audit evidence is in `results/local-nf4-v1/person1-audit`.
-- [ ] Human reviewer reads scoring tests, independently solves all ten selected questions, and records name/date/decisions/notes. Automated agreement does not complete this check.
-- [ ] Human reviewer checks rendered plot points, intervals, labels, captions, and later integrated tables against audited records.
-- [ ] Human reviewer signs off the dataset/split/metric paragraphs and resolves any numerical disagreements.
+- [x] Human reviewer reads scoring tests and independently solves all ten selected questions. Mukthish's numerical answers/name/date/decisions/notes are recorded for all ten cases on 2026-10-13; the user confirmed the remaining Person 1 checks on October 13.
+- [x] Human reviewers check rendered plot points, intervals, labels, captions, and integrated tables against audited records; completion confirmed by the user on October 13, 2026. Other reviewer names and individual review dates were not supplied.
+- [x] Human reviewers check the dataset/split/metric paragraphs and investigate numerical disagreements; completion confirmed by the user on October 13, 2026. See the Person 1 completion record in `docs/MANUAL_TASKS.md`; historical automated audit evidence remains unchanged.
 
 ### Person 2 — inference
 
@@ -58,14 +58,15 @@ Fill in names before distributing work:
 - [x] Refine Introduction/Related Work, separate methodology/setup, integrate genuine results and observable error findings; retain future router work.
 - [x] Prepare 40-case observable packet and ten distinct-question double reviews, with blank semantic decisions and independent solutions; preserve original sheet.
 - [x] Cross-check technical/numerical descriptions, run all 38 tests and verify protected-input preservation.
-- [x] Create [Overleaf project](https://www.overleaf.com/project/6accbd9876b381cd22410e6d), compile with pdfLaTeX, repair errors/layout, and inspect the exported four-page main text (six pages total). Save PDF/log/proof.
+- [x] Create [Overleaf project](https://www.overleaf.com/project/6accbd9876b381cd22410e6d), compile with pdfLaTeX, repair errors/layout, and inspect all pages. Current final export: four main-text pages, seven total; PDF/log/source/proof saved in output/pdf/final-report.pdf and results/local-nf4-v1/final-report. Earlier six-page export preserved.
+- [x] Resolve all manuscript placeholders except author names; use the user-supplied BITS Pilani affiliation and explicit future-work boundaries.
 - [ ] Human reviewers complete semantic/numerical/literature/line-by-line/layout sign-off in docs/MANUAL_TASKS.md.
-- [ ] Enter actual author details, invite teammates, confirm cutoff/anonymity/page/source rules through the course portal, and submit manually.
+- [ ] Enter actual author names, invite teammates, confirm cutoff/anonymity/page/source rules through the course portal, and submit manually.
 
 ## October 13: submission gate
 
 - [x] Local `status` shows 2,300 genuine completed responses: 50 matched IDs, both models, 20% of 11,500 planned responses. Held-out coverage is zero.
-- [x] The manuscript text distinguishes completed preliminary coverage from planned full development and held-out experiments; human sign-off remains pending.
+- [x] The manuscript text distinguishes completed preliminary coverage from planned full development and held-out experiments; Person 1's human checks are complete per the user's October 13 confirmation. Other roles' human checks remain pending.
 - [x] At least one evidence-supported preliminary insight is described with N=50, exploratory intervals and formatting caveats; human interpretation sign-off remains pending.
 - [x] Methodology, objectives, system diagram, setup and limitations are drafted; human approval pending.
 - [x] Assisted citation metadata and claim checks recorded; no sample references remain. Human full-paper reading/sign-off remains pending.

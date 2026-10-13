@@ -32,7 +32,7 @@ The separate audit script checks original source files, dataset rows/splits, pil
 .venv-gpu/bin/python scripts/audit_person1.py
 ```
 
-Read [the audit evidence](results/local-nf4-v1/person1-audit/REPORT.md) and [Person 1's manual tasks](docs/MANUAL_TASKS.md). The ten-case numerical review packet and editable review sheet are saved with the audit. Human reviewer/date/decision fields start blank; a successful automated audit does not complete that sign-off. Rerunning the audit preserves existing annotations.
+Read [the audit evidence](results/local-nf4-v1/person1-audit/REPORT.md) and [Person 1's manual tasks](docs/MANUAL_TASKS.md). All ten numerical cases now have completed annotations by Mukthish dated October 13, 2026; the user's later confirmation records remaining Person 1 checks complete. The original blank copy and historical automated evidence are preserved. Rerunning the audit preserves existing annotations.
 
 ## Run the preliminary experiments on a free GPU
 
@@ -105,7 +105,7 @@ Use only one active notebook runtime writing to a results folder. Local writer l
 
 ## Paper and delivery
 
-`paper/main.tex` contains the genuine preliminary results and future-work boundaries. It is compiled and visually inspected, with human sign-off and author details pending before submission. Read `paper/README.md` for Overleaf instructions and the citation audit.
+`paper/main.tex` contains genuine preliminary results and future-work boundaries. The current final report is `output/pdf/final-report.pdf`: four main-text pages, seven total, compiled and visually inspected. BITS Pilani is entered; only author names remain placeholders. Remaining role-specific review records and course submission are separate tasks. Read `paper/README.md` and `results/local-nf4-v1/final-report/REPORT.md` for delivery evidence. Refresh all three current archives with `.venv/bin/python scripts/package_final_report.py`.
 
 ```bash
 python scripts/package.py
@@ -129,4 +129,4 @@ The script accepts `--config`, `--data-dir`, `--results-dir`, and `--output-dir`
 
 ## Person 4 report and Overleaf
 
-[Overleaf project](https://www.overleaf.com/project/6accbd9876b381cd22410e6d) compiled with pdfLaTeX: four main-text pages, six total, zero errors/warnings. [Execution evidence](results/local-nf4-v1/person4-report/OVERLEAF.md) and local PDF are saved. Literature notes/claim map are in paper; [40-case evidence and ten double reviews](results/local-nf4-v1/person4-review/README.md) retain blank human judgments. Reproduce with `.venv/bin/python scripts/build_person4_packet.py` (configurable input/output paths). All 38 tests pass; frozen scientific files/fingerprint are unchanged. [Manual checks](docs/MANUAL_TASKS.md) cover Persons 1, 3 and 4. Authors, human reviews, invitations, portal rules and submission remain pending.
+[Overleaf project](https://www.overleaf.com/project/6accbd9876b381cd22410e6d) now contains the final preliminary report: four main-text pages, seven total, zero errors/warnings/overfull boxes. [Current execution evidence](results/local-nf4-v1/final-report/REPORT.md) and final PDF are saved; the earlier six-page Person 4 export is preserved. Literature notes/claim map are in paper; [40-case evidence and ten double reviews](results/local-nf4-v1/person4-review/README.md) retain blank semantic judgments. Reproduce packets with `.venv/bin/python scripts/build_person4_packet.py` (configurable input/output paths). All 38 tests passed during Person 4 implementation; this manuscript-only revision preserves frozen scientific files and the fingerprint. [Manual checks](docs/MANUAL_TASKS.md) record completed Person 1 reviews and separate remaining Person 3/4 checks. Only author names remain report placeholders; invitations, portal rules and submission remain separate tasks.
